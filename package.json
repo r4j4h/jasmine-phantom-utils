@@ -1,6 +1,6 @@
 {
   "name": "jasmine-phantom-utils",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "jasmine-phantom-utils is a small library providing helper functions for parsing Jasmine's Html SpecRunner's DOM when using a headless browser like PhantomJS, especially geared for its run-jasmine.js example.",
   "keywords": [
     "jasmine",
