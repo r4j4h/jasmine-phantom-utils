@@ -9,15 +9,15 @@ describe('transformSymbolsToDotLine', function() {
             noConsoleStyles = consoleStyles.empty;
 
         it('converts passed as a .', function() {
-            expect( transformer(['passed', 'passed'], noConsoleStyles ) ).toBe('..');
+            expect( transformer(['jasmine-passed', 'jasmine-passed'], noConsoleStyles ) ).toBe('..');
         });
 
         it('converts pending as a *', function() {
-            expect( transformer(['pending', 'pending'], noConsoleStyles ) ).toBe('**');
+            expect( transformer(['jasmine-pending', 'jasmine-pending'], noConsoleStyles ) ).toBe('**');
         });
 
         it('converts failed as a x', function() {
-            expect( transformer(['failed', 'failed'], noConsoleStyles ) ).toBe('xx');
+            expect( transformer(['jasmine-failed', 'jasmine-failed'], noConsoleStyles ) ).toBe('xx');
         });
 
         it('converts anything else to a ?', function() {
@@ -25,12 +25,12 @@ describe('transformSymbolsToDotLine', function() {
         });
 
         it('handles mixture', function() {
-            expect( transformer(['passed', 'failed', 'passed', 'pending'], noConsoleStyles ) ).toBe('.x.*');
+            expect( transformer(['jasmine-passed', 'jasmine-failed', 'jasmine-passed', 'jasmine-pending'], noConsoleStyles ) ).toBe('.x.*');
         });
 
         it('uses console styles if given', function() {
-            expect( JSON.stringify( transformer(['passed', 'failed', 'passed', 'pending'], noConsoleStyles ) ) ).toBe('".x.*"');
-            expect( JSON.stringify( transformer(['passed', 'failed', 'passed', 'pending'], standardConsoleStyles ) ) ).toBe( JSON.stringify('\u001b[32m.\u001b[31mx\u001b[32m.\u001b[33m*\u001b[m'));
+            expect( JSON.stringify( transformer(['jasmine-passed', 'jasmine-failed', 'jasmine-passed', 'jasmine-pending'], noConsoleStyles ) ) ).toBe('".x.*"');
+            expect( JSON.stringify( transformer(['jasmine-passed', 'jasmine-failed', 'jasmine-passed', 'jasmine-pending'], standardConsoleStyles ) ) ).toBe( JSON.stringify('\u001b[32m.\u001b[31mx\u001b[32m.\u001b[33m*\u001b[m'));
         });
 
     });
