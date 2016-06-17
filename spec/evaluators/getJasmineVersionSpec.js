@@ -1,43 +1,31 @@
+var jsdom = require('jsdom');
 
 describe('getJasmineVersion', function() {
 
     describe('returns jasmine title and version from page', function() {
 
+        beforeAll(function() {
+            this.evaluator = require('../../lib/evaluators/evaluators.js' ).getJasmineVersion;
+        });
+
         beforeEach(function() {
-            this.documentMock = jasmine.createSpy('document');
-            this.documentMock.body = jasmine.createSpyObj('body', ['querySelector']);
-
-            this.titleQuerySelectorResultMock = {
-                innerText: 'title'
-            };
-            this.versionQuerySelectorResultMock = {
-                innerText: 'version'
-            };
-            this.elseQuerySelectorResultMock = {
-                innerText: 'some-unexpected-inner-text'
-            };
-
-            var that = this;
-            this.documentMock.body.querySelector.and.callFake( function(selector) {
-                if ( selector == '.jasmine-banner .jasmine-title' ) {
-                    return that.titleQuerySelectorResultMock;
-                } else if ( selector = '.jasmine-banner .jasmine-version' ) {
-                    return that.versionQuerySelectorResultMock;
-                } else {
-                    return that.elseQuerySelectorResultMock;
-                }
-            } );
+            this.document = jsdom.jsdom('<body><div class="jasmine-banner">' +
+                '<span class="jasmine-title">jasmine</span>' +
+                '<li class="jasmine-version">?</li>' +
+                '</div></body>');
 
             var global = (function() { return this; })();
-            global.document = this.documentMock;
+            this.realDocument = global.document;
+            global.document = this.document;
+        });
+
+        afterAll(function() {
+            global.document = this.realDocument;
         });
 
         it('returns jasmine title and version from page', function() {
-            var evaluator = require('../../lib/evaluators/evaluators.js' ).getJasmineVersion;
-
-            var actual = evaluator();
-
-            expect( actual ).toBe('title version');
+            var actual = this.evaluator();
+            expect( actual ).toBe('jasmine ?');
         });
 
     });

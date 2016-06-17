@@ -12,7 +12,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "test": "./node_modules/.bin/jasmine"
+    "test": "./node_modules/.bin/jasmine",
+    "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/jasmine -x **/spec/**"
   },
   "files": [
     "index.js",
@@ -26,7 +27,9 @@
     "console-styles": "https://github.com/r4j4h/console-styles.git"
   },
   "devDependencies": {
-    "jasmine": "^2.4.1"
+    "istanbul": "^0.4.2",
+    "jasmine": "^2.4.1",
+    "jsdom": "^9.2.1"
   },
   "bugs": {
     "url": "https://github.com/r4j4h/jasmine-phantom-utils/issues"
